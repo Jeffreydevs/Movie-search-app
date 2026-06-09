@@ -1,6 +1,7 @@
 import {useEffect, useState } from "react"
 import "./App.css"
 import SearchBar from "./Searchbar"
+import FavouriteList from "./FavouriteList"
 import MovieGrid from "./Moviegrid"
 import MovieDetails from "./MovieDetails"
 
@@ -12,6 +13,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error,setError] = useState("")
   const [selectedMovie, setSelectedMovie] = useState(null)
+  const [favorites, setFavorites] = useState([])
 
   useEffect(
     () => {
@@ -52,7 +54,9 @@ function App() {
 
       {error && <h2>{error}</h2>}
 
-      <MovieGrid movies={filteredMovies} setSelectedMovie={setSelectedMovie} />
+      <FavouriteList favorites = {favorites} setFavorites = {setFavorites}/>
+
+      <MovieGrid movies={filteredMovies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites}/>
 
    </div>
   )

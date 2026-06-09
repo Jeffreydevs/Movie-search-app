@@ -1,4 +1,4 @@
-function MovieCard({movie, setSelectedMovie}){
+function MovieCard({movie, setSelectedMovie, favorites, setFavorites}){
   return(  
         <div className="movie-card" onClick={() => setSelectedMovie(movie)} >
             <img
@@ -12,6 +12,15 @@ function MovieCard({movie, setSelectedMovie}){
             />
             <h3 >{movie.Title}</h3>
             <p>{movie.Year}</p>
+            <button
+                onClick={(e) => {
+                e.stopPropagation()
+                if (!favorites.find((fav) => fav.imdbID === movie.imdbID)) {
+                setFavorites([...favorites, movie])
+                }
+                }}>
+                ⭐ Favorite
+            </button>
         </div>
    )
 }
