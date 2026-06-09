@@ -19,11 +19,20 @@ const [movieInfo, setMovieInfo] = useState(null)
         return null
     }
         if (!movieInfo) {
-        return null
+        return <h2>Loading movie details...</h2>
     }
 
 return (
   <div className="movie-details">
+    <img
+        src={
+          movieInfo.Poster !== "N/A"
+            ? movieInfo.Poster
+            : "https://placehold.co/300x450?text=No+Poster"
+        }
+        alt={movieInfo.Title}
+        width="180"
+    />
     <h2>{movieInfo.Title}</h2>
 
     <p>Year: {movieInfo.Year}</p>
@@ -33,6 +42,8 @@ return (
     <p>Director: {movieInfo.Director}</p>
 
     <p>IMDb Rating: {movieInfo.imdbRating}</p>
+
+    <p>Plot: {movieInfo.Plot}</p>
   </div>
 )
 }
