@@ -6,9 +6,12 @@ function App() {
   const[search,setSearch] = useState("")
   const[movies,setMovies] = useState([])
   const[query, setQuery] = useState("batman")
+  const[loading, setLoading] = useState(false)
+  const[error,setError] = useState("")
 
   useEffect(
     () => {
+    setLoading(true)
     fetch(`https://www.omdbapi.com/?apikey=ea1d2efb&s=${query}`)
     .then((response) => response.json())
     .then((data) => {
@@ -16,9 +19,12 @@ function App() {
 
     if (data.Search) {
     setMovies(data.Search)
+    setError("")
     } else {
     setMovies([])
-    }        
+    setError("No Movies Found")
+    }
+    setLoading(false)        
     })
     }, [query])
 
@@ -41,17 +47,22 @@ function App() {
 
       <h3>Found {filteredMovies.length} movies</h3>
 
+      {loading && <h2>Loading...</h2>}
+
+      {error && <h2>{error}</h2>}
+
       <div className="movie-grid">
         {
-          filteredMovies.length === 0
-          ? <h2>No Movies Found</h2>
-          : filteredMovies.map((movie) => (
-            <div className="movie-card"
-                key={movie.imdbID}>
+            filteredMovies.map((movie) => (
+            <div className="movie-card" key={movie.imdbID}>
               <img
-                src={movie.Poster}
+                src= {movie.Poster !== "N/A"
+                ? movie.Poster
+                : "https://placehold.co/300x450?text=No+Poster"
+                }
                 alt={movie.Title}
-                width="150"
+                onError={(e) => {
+                e.target.src = "https://placehold.co/300x450?text=No+Poster"}}
               />
               <h3 >{movie.Title}</h3>
               <p>{movie.Year}</p>
