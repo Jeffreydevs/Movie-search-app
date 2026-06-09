@@ -1,6 +1,6 @@
 import {useEffect, useState } from "react"
 
-function MovieDetails({ selectedMovie }) {
+function MovieDetails({ selectedMovie, setSelectedMovie }) {
 const [movieInfo, setMovieInfo] = useState(null)
   useEffect(() => {
     if (!selectedMovie) return
@@ -24,6 +24,7 @@ const [movieInfo, setMovieInfo] = useState(null)
 
 return (
   <div className="movie-details">
+    <button onClick={() => setSelectedMovie(null)}>Close</button>
     <img
         src={
           movieInfo.Poster !== "N/A"

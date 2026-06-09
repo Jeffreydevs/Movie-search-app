@@ -46,7 +46,7 @@ function App() {
 
       <h3>Found {filteredMovies.length} movies</h3>
 
-      <MovieDetails selectedMovie={selectedMovie} />
+      <MovieDetails selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />
 
       {loading && <h2>Loading...</h2>}
 
