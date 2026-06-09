@@ -4,20 +4,22 @@ import SearchBar from "./Searchbar"
 import FavouriteList from "./FavouriteList"
 import MovieGrid from "./Moviegrid"
 import MovieDetails from "./MovieDetails"
+import Navbar from "./Navbar"
+import HeroBanner from "./HeroBanner"
+import {Routes, Route } from "react-router-dom"
 
 function App() {
 
   const [search,setSearch] = useState("")
   const [movies,setMovies] = useState([])
   const [query, setQuery] = useState("batman")
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error,setError] = useState("")
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [favorites, setFavorites] = useState([])
 
   useEffect(
     () => {
-    setLoading(true)
     fetch(`https://www.omdbapi.com/?apikey=ea1d2efb&s=${query}`)
     .then((response) => response.json())
     .then((data) => {
@@ -32,33 +34,44 @@ function App() {
     }
     setLoading(false)        
     })
+    .catch(() => {
+      setMovies([])
+      setError("Something went wrong")
+      setLoading(false)
+    })
     }, [query])
 
   const filteredMovies = movies
   
   return(
     <div className="container">
-      <h1>Movie App</h1>
+        <Navbar />
 
-      <h3>Total Movies: {movies.length}</h3>
+        <Routes>
 
-      <SearchBar search={search} setSearch={setSearch} setQuery={setQuery} />
+          <Route path="/" element={
+            <>
+              <HeroBanner />
 
-      <h2>You Searched for {search}</h2>
+              <SearchBar search={search} setSearch={setSearch} setQuery={setQuery} query={query} setLoading={setLoading} />
 
-      <h3>Found {filteredMovies.length} movies</h3>
+              {loading && <h2>Loading...</h2>}
 
-      <MovieDetails selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />
+              {error && <h2>{error}</h2>}
 
-      {loading && <h2>Loading...</h2>}
+              <MovieDetails selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />
 
-      {error && <h2>{error}</h2>}
+              <MovieGrid movies={filteredMovies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites}/>
+            </>
+           }
+          />
+          <Route
+            path="/my-list"
+            element={<FavouriteList favorites={favorites} setFavorites={setFavorites}/>}
+          />
+        </Routes>    
 
-      <FavouriteList favorites = {favorites} setFavorites = {setFavorites}/>
-
-      <MovieGrid movies={filteredMovies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites}/>
-
-   </div>
+    </div>
   )
 }
 export default App

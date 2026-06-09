@@ -1,5 +1,10 @@
 {
+  "scripts": {
+    "dev": "npm --prefix \"Movie app\" run dev",
+    "build": "npm --prefix \"Movie app\" run build",
+    "lint": "npm --prefix \"Movie app\" run lint"
+  },
   "dependencies": {
-    "react-router-dom": "^7.17.0"
+    "react-router-dom": "^6.30.4"
   }
 }
