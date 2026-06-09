@@ -1,4 +1,5 @@
 import {useEffect, useState } from "react"
+import "./App.css"
 
 function App() {
 
@@ -24,28 +25,41 @@ function App() {
   const filteredMovies = movies
   
   return(
-    <>
-    <h1>Movie App</h1>
-    <h3>Total Movies: {movies.length}</h3>
+    <div className="container">
+      <h1>Movie App</h1>
 
-    <input 
-    placeholder="Search Movie..." 
-    onChange={(event)=>setSearch(event.target.value)}
-    />
+      <h3>Total Movies: {movies.length}</h3>
 
-    <button onClick={() => setQuery(search)}>Search</button>  
+      <input 
+      placeholder="Search Movie..." 
+      onChange={(event)=>setSearch(event.target.value)}
+      />
 
-    <h2>You Searched for {search}</h2>
-    <h3>Found {filteredMovies.length} movies</h3>
-    {
-    filteredMovies.length === 0
-      ? <h2>No Movies Found</h2>
-      : filteredMovies.map((movie) => (
-          <h3 key={movie.imdbID}> {movie.Title}</h3>
-        ))
-    }
+      <button onClick={() => setQuery(search)}>Search</button>  
 
-    </>
+      <h2>You Searched for {search}</h2>
+
+      <h3>Found {filteredMovies.length} movies</h3>
+
+      <div className="movie-grid">
+        {
+          filteredMovies.length === 0
+          ? <h2>No Movies Found</h2>
+          : filteredMovies.map((movie) => (
+            <div className="movie-card"
+                key={movie.imdbID}>
+              <img
+                src={movie.Poster}
+                alt={movie.Title}
+                width="150"
+              />
+              <h3 >{movie.Title}</h3>
+              <p>{movie.Year}</p>
+            </div>
+          ))
+        }
+      </div>
+   </div>
   )
 }
 export default App
