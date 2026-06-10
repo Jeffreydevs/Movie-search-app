@@ -7,6 +7,7 @@ import MovieDetails from "./MovieDetails"
 import Navbar from "./Navbar"
 import HeroBanner from "./HeroBanner"
 import {Routes, Route } from "react-router-dom"
+import MovieRow from "./MovieRow"
 
 function App() {
 
@@ -23,8 +24,6 @@ function App() {
 
   useEffect(
     () => {
-    setLoading(true)
-    setError("")
     fetch(`https://www.omdbapi.com/?apikey=ea1d2efb&s=${query}`)
     .then((response) => response.json())
     .then((data) => {
@@ -70,7 +69,12 @@ function App() {
 
               <MovieDetails selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />
 
-              <MovieGrid movies={filteredMovies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites}/>
+              <MovieRow title="Trending Now" movies={filteredMovies} setSelectedMovie={setSelectedMovie} favorites={favorites}
+              setFavorites={setFavorites} />
+
+              <MovieRow title="Popular Movies" movies={filteredMovies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites} />
+
+              <MovieRow title="Action Movies" movies={filteredMovies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites} />
             </>
            }
           />
