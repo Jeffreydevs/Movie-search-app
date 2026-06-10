@@ -16,23 +16,28 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error,setError] = useState("")
   const [selectedMovie, setSelectedMovie] = useState(null)
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useState(() => {
+  const savedFavorites = localStorage.getItem("favorites")
+  return savedFavorites ? JSON.parse(savedFavorites) : []
+  })
 
   useEffect(
     () => {
+    setLoading(true)
+    setError("")
     fetch(`https://www.omdbapi.com/?apikey=ea1d2efb&s=${query}`)
     .then((response) => response.json())
     .then((data) => {
     console.log(data)
 
     if (data.Search) {
-    setMovies(data.Search)
-    setError("")
+     setMovies(data.Search)
+     setError("")
     } else {
-    setMovies([])
-    setError("No Movies Found")
+     setMovies([])
+     setError(data.Error || "No Movies Found")
     }
-    setLoading(false)        
+     setLoading(false)        
     })
     .catch(() => {
       setMovies([])
@@ -40,6 +45,10 @@ function App() {
       setLoading(false)
     })
     }, [query])
+
+  useEffect(() => {
+  localStorage.setItem("favorites", JSON.stringify(favorites))
+  }, [favorites])
 
   const filteredMovies = movies
   
