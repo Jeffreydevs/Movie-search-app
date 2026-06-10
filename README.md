@@ -27,29 +27,6 @@ OMDb API
 Local Storage
 
 
-
-          📦 Installation
-
-Clone the repository:
-
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-
-Navigate to the project folder:
-
-cd YOUR_REPOSITORY
-
-Install dependencies:
-
-npm install
-
-Run the development server:
-
-npm run dev
-
-Open:
-
-http://localhost:5173
-
                🎯 Learning Outcomes
 
 This project helped me learn:
