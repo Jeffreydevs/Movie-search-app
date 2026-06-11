@@ -2,7 +2,6 @@ import {useEffect, useState } from "react"
 import "./App.css"
 import SearchBar from "./Searchbar"
 import FavouriteList from "./FavouriteList"
-import MovieGrid from "./Moviegrid"
 import MovieDetails from "./MovieDetails"
 import Navbar from "./Navbar"
 import HeroBanner from "./HeroBanner"
@@ -75,8 +74,6 @@ function App() {
   useEffect(() => {
   localStorage.setItem("favorites", JSON.stringify(favorites))
   }, [favorites])
-
-  const filteredMovies = movies
   
   return(
     <div className="container">
@@ -94,7 +91,14 @@ function App() {
 
               {error && <h2>{error}</h2>}
 
-              <MovieDetails selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} />
+              <MovieDetails
+                selectedMovie={selectedMovie}
+                setSelectedMovie={setSelectedMovie}
+                favorites={favorites}
+                setFavorites={setFavorites}
+              />
+
+              <MovieRow title="Search Results" movies={movies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites} />
 
               <MovieRow title="Trending Now" movies={trendingMovies} setSelectedMovie={setSelectedMovie} favorites={favorites} setFavorites={setFavorites} />
 
